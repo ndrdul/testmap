@@ -8,6 +8,7 @@ import {
 
 import { scaleQuantize } from "d3-scale";
 import { csv } from "d3-fetch";
+import { interpolatePiYG } from "d3-scale-chromatic";
 
 const colorScale = scaleQuantize()
   .domain([1, 10])
@@ -47,9 +48,9 @@ const MapChart = ({ setTooltipContent }) => {
                   <Geography
                     key={geo.rsmKey}
                     geography={geo}
-                    fill={"#9a311f"}
+                    fill={colorScale(cur ? cur.Last : "#000000")}
                     onMouseEnter={() => {
-                      setTooltipContent(`${geo.properties.name} - ${cur.Country} - ${cur.Last}`);
+                      setTooltipContent(`${geo.properties.name} - ${cur.Country} - ${cur.Last} - Last Updated: ${cur.Reference}`);
                     }}
                     onMouseLeave={() => {
                       setTooltipContent("");
@@ -76,3 +77,6 @@ const MapChart = ({ setTooltipContent }) => {
 };
 
 export default memo(MapChart);
+
+
+//https://codesandbox.io/s/o73pb?file=/src/MapChart.js:1087-1137
